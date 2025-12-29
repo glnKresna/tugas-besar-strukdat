@@ -66,8 +66,7 @@ void tambahKategori(Arsip &A, int th, string namaKategori) {
 }
 
 // Tambah Media
-void tambahMedia(Arsip &A, int th, string namaKategori,
-                 string namaMedia, string format, int ukuran) {
+void tambahMedia(Arsip &A, int th, string namaKategori, string namaMedia, string format, int ukuran) {
     Tahun* T = cariTahun(A, th);
     if (T == NULL) return;
 
@@ -101,8 +100,8 @@ void tampilArsip(Arsip A) {
             Media* M = K->firstMedia;
             while (M != NULL) {
                 cout << "    - " << M->namaMedia
-                     << " | " << M->format
-                     << " | " << M->ukuran << " MB" << endl;
+                    << " | " << M->format
+                    << " | " << M->ukuran << " MB" << endl;
                 M = M->nextMedia;
             }
             K = K->nextKategori;

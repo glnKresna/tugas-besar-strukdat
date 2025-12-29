@@ -1,0 +1,47 @@
+#ifndef BSTFILM_H
+#define BSTFILM_H
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct filmData {
+    string judul;
+    string genre;
+    int tahunTayang;
+    int durasi;
+    float rating;
+
+    filmData* left;
+    filmData* right;
+};
+
+struct BSTFilm {
+    filmData* root;
+};
+
+void initBST(BSTFilm &T);
+
+filmData* createNode(
+    string judul,
+    string genre,
+    int tahunTayang,
+    int durasi,
+    float rating
+);
+
+void insertFilm(BSTFilm &T, filmData* newNode);
+filmData* searchByJudul(filmData* root, string judul);
+filmData* deleteByJudul(filmData* root, string judul);
+
+void inorder(filmData* root);
+void preorder(filmData* root);
+void postorder(filmData* root);
+
+void searchByRating(filmData* root, float rating);
+void searchByTahun(filmData* root, int tahunTayang);
+
+int countFilm(filmData* root);
+filmData* findHighestRating(filmData* root);
+
+#endif
