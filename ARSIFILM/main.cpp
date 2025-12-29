@@ -64,8 +64,13 @@ int main() {
         case 3:
             cout << "Judul film yang dihapus: ";
             getline(cin, judul);
-            filmBST.root = deleteByJudul(filmBST.root, judul);
-            cout << "Data film diproses.\n";
+
+            if (searchByJudul(filmBST.root, judul) == NULL) {
+                cout << "Film tidak ditemukan. Tidak ada data yang dihapus.\n";
+            } else {
+                filmBST.root = deleteByJudul(filmBST.root, judul);
+                cout << "Film berhasil dihapus.\n";
+            }
             break;
 
         case 4:
