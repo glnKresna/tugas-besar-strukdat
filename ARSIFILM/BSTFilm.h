@@ -38,10 +38,4 @@ void inorder(filmData* root);
 void preorder(filmData* root);
 void postorder(filmData* root);
 
-void searchByRating(filmData* root, float rating);
-void searchByTahun(filmData* root, int tahunTayang);
-
-int countFilm(filmData* root);
-filmData* findHighestRating(filmData* root);
-
 #endif

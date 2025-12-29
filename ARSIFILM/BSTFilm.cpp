@@ -122,26 +122,6 @@ void postorder(filmData* root) {
     }
 }
 
-void searchByRating(filmData* root, float rating) {
-    if (root != NULL) {
-        searchByRating(root->left, rating);
-        if (root->rating >= rating) {
-            cout << root->judul << " (" << root->rating << ")\n";
-        }
-        searchByRating(root->right, rating);
-    }
-}
-
-void searchByTahun(filmData* root, int tahunTayang) {
-    if (root != NULL) {
-        searchByTahun(root->left, tahunTayang);
-        if (root->tahunTayang == tahunTayang) {
-            cout << root->judul << " (" << root->tahunTayang << ")\n";
-        }
-        searchByTahun(root->right, tahunTayang);
-    }
-}
-
 int countFilm(filmData* root) {
     if (root == NULL)
         return 0;

@@ -4,96 +4,75 @@ int main() {
     BSTFilm filmBST;
     initBST(filmBST);
 
+    insertFilm(filmBST, createNode("Joker", "Drama", 2019, 148, 8.8));
+    insertFilm(filmBST, createNode("Avengers Endgame", "Action", 2019, 143, 8.0));
+    insertFilm(filmBST, createNode("La La Land", "Romance", 2016, 195, 7.9));
+    insertFilm(filmBST, createNode("The Truman Show", "Comedy", 1998, 122, 8.4));
+    insertFilm(filmBST, createNode("Interstellar", "Sci-Fi", 2014, 169, 8.6));
+
     int pilihan;
     string judul, genre;
     int tahun, durasi;
     float rating;
 
-    do {
-        cout << "\n===== SISTEM ARSIP FILM (BST) =====\n";
-        cout << "1. Tambah Data Film\n";
-        cout << "2. Cari Film (Judul)\n";
-        cout << "3. Hapus Film\n";
-        cout << "4. Tampilkan Semua Film (A - Z)\n";
-        cout << "5. Cari Film Berdasarkan Rating\n";
-        cout << "6. Cari Film Berdasarkan Tahun\n";
-        cout << "7. Jumlah Film\n";
-        cout << "8. Film Rating Tertinggi\n";
-        cout << "0. Keluar\n";
-        cout << "Pilih menu: ";
-        cin >> pilihan;
-        cin.ignore();
+    cout << "\n===== SISTEM ARSIP FILM =====\n";
+    cout << "1. Tambah Data Film\n";
+    cout << "2. Cari Film (Judul)\n";
+    cout << "3. Hapus Film\n";
+    cout << "4. Tampilkan Semua Film (A - Z)\n";
+    cout << "0. Keluar\n";
+    cout << "Pilih menu: ";
+    cin >> pilihan;
+    cin.ignore();
 
-        switch (pilihan) {
-        case 1:
-            cout << "Judul Film   : ";
-            getline(cin, judul);
-            cout << "Genre        : ";
-            getline(cin, genre);
-            cout << "Tahun Tayang : ";
-            cin >> tahun;
-            cout << "Durasi (mnt) : ";
-            cin >> durasi;
-            cout << "Rating       : ";
-            cin >> rating;
+    switch (pilihan) {
+    case 1:
+        cout << "Judul Film   : ";
+        getline(cin, judul);
+        cout << "Genre        : ";
+        getline(cin, genre);
+        cout << "Tahun Tayang : ";
+        cin >> tahun;
+        cout << "Durasi (mnt) : ";
+        cin >> durasi;
+        cout << "Rating       : ";
+        cin >> rating;
 
-            insertFilm(filmBST, createNode(judul, genre, tahun, durasi, rating));
-            cout << "Film berhasil ditambahkan!\n";
-            break;
+        insertFilm(filmBST, createNode(judul, genre, tahun, durasi, rating));
+        cout << "Film berhasil ditambahkan!\n";
+        break;
 
-        case 2:
-            cout << "Masukkan judul film: ";
-            getline(cin, judul);
-            {
-                filmData* hasil = searchByJudul(filmBST.root, judul);
-                if (hasil != NULL) {
-                    cout << "Film ditemukan!\n";
-                    cout << "Judul  : " << hasil->judul << endl;
-                    cout << "Rating : " << hasil->rating << endl;
-                } else {
-                    cout << "Film tidak ditemukan.\n";
-                }
+    case 2:
+        cout << "Masukkan judul film: ";
+        getline(cin, judul);
+        {
+            filmData* hasil = searchByJudul(filmBST.root, judul);
+            if (hasil != NULL) {
+                cout << "Film ditemukan!\n";
+                cout << "Judul  : " << hasil->judul << endl;
+                cout << "Rating : " << hasil->rating << endl;
+                cout << "Genre  : " << hasil->genre << endl;
+                cout << "Tahun  : " << hasil->tahunTayang << endl;
+                cout << "Rating : " << hasil->rating << endl;
+            } else {
+                cout << "Film tidak ditemukan.\n";
             }
-            break;
-
-        case 3:
-            cout << "Judul film yang dihapus: ";
-            getline(cin, judul);
-            filmBST.root = deleteByJudul(filmBST.root, judul);
-            cout << "Data film diproses.\n";
-            break;
-
-        case 4:
-            inorder(filmBST.root);
-            break;
-
-        case 5:
-            cout << "Minimal rating: ";
-            cin >> rating;
-            searchByRating(filmBST.root, rating);
-            break;
-
-        case 6:
-            cout << "Tahun tayang: ";
-            cin >> tahun;
-            searchByTahun(filmBST.root, tahun);
-            break;
-
-        case 7:
-            cout << "Jumlah film: " << countFilm(filmBST.root) << endl;
-            break;
-
-        case 8:
-            {
-                filmData* best = findHighestRating(filmBST.root);
-                if (best != NULL) {
-                    cout << "Film Rating Tertinggi:\n";
-                    cout << best->judul << " (" << best->rating << ")\n";
-                }
-            }
-            break;
         }
-    } while (pilihan != 0);
+        break;
 
-    return 0;
-}
+    case 3:
+        cout << "Judul film yang dihapus: ";
+        getline(cin, judul);
+        filmBST.root = deleteByJudul(filmBST.root, judul);
+        cout << "Data film diproses.\n";
+        break;
+
+    case 4:
+        inorder(filmBST.root);
+        break;
+
+    case 0:
+        cout << "Keluar dari program.\n";
+        break;
+    }
+} 
