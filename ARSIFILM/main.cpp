@@ -79,7 +79,7 @@ int main() {
             cout << "Judul film yang dihapus: ";
             getline(cin, judul);
             filmBST.root = deleteByJudul(filmBST.root, judul);
-            cout << "Data film dihapus.\n";
+            cout << "Data film diproses.\n";
             break;
 
         case 6:
