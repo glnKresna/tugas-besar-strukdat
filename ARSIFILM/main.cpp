@@ -4,23 +4,25 @@ int main() {
     BSTFilm filmBST;
     initBST(filmBST);
 
-    insertFilm(filmBST, createNode("Joker", "Drama", 2019, 148, 8.8));
-    insertFilm(filmBST, createNode("Avengers Endgame", "Action", 2019, 143, 8.0));
-    insertFilm(filmBST, createNode("La La Land", "Romance", 2016, 195, 7.9));
-    insertFilm(filmBST, createNode("The Truman Show", "Comedy", 1998, 122, 8.4));
-    insertFilm(filmBST, createNode("Interstellar", "Sci-Fi", 2014, 169, 8.6));
+    insertFilm(filmBST, createNode("Joker", "Drama", 2019, 8.8));
+    insertFilm(filmBST, createNode("Avengers Endgame", "Action", 2019, 8.0));
+    insertFilm(filmBST, createNode("La La Land", "Romance", 2016, 7.9));
+    insertFilm(filmBST, createNode("The Truman Show", "Comedy", 1998, 8.4));
+    insertFilm(filmBST, createNode("Interstellar", "Sci-Fi", 2014, 8.6));
 
     int pilihan;
     string judul, genre;
-    int tahun, durasi;
+    int tahun;
     float rating;
 
     do {
         cout << "\n===== SISTEM ARSIP FILM =====\n";
         cout << "1. Tambah Data Film\n";
         cout << "2. Cari Film (Judul)\n";
-        cout << "3. Hapus Film\n";
-        cout << "4. Tampilkan Semua Film (A - Z)\n";
+        cout << "3. Cari Film (Rating)\n";
+        cout << "4. Cari Film (Genre)\n";
+        cout << "5. Hapus Film\n";
+        cout << "6. Tampilkan Semua Film (A - Z)\n";
         cout << "0. Keluar\n";
         cout << "Pilih menu: ";
         cin >> pilihan;
@@ -34,13 +36,11 @@ int main() {
             getline(cin, genre);
             cout << "Tahun Tayang : ";
             cin >> tahun;
-            cout << "Durasi (mnt) : ";
-            cin >> durasi;
             cout << "Rating       : ";
             cin >> rating;
             cin.ignore();
 
-            insertFilm(filmBST, createNode(judul, genre, tahun, durasi, rating));
+            insertFilm(filmBST, createNode(judul, genre, tahun, rating));
             cout << "Film berhasil ditambahkan!\n";
             break;
 
@@ -62,13 +62,27 @@ int main() {
             break;
 
         case 3:
-            cout << "Judul film yang dihapus: ";
-            getline(cin, judul);
-            filmBST.root = deleteByJudul(filmBST.root, judul);
-            cout << "Data film diproses.\n";
+            float minRating;
+            cout << "Masukkan rating: ";
+            cin >> minRating;
+            searchByRating(filmBST.root, minRating);
             break;
 
         case 4:
+            cout << "Masukkan genre film: ";
+            getline(cin, genre);
+            searchByGenre(filmBST.root, genre);
+
+            break;
+
+        case 5:
+            cout << "Judul film yang dihapus: ";
+            getline(cin, judul);
+            filmBST.root = deleteByJudul(filmBST.root, judul);
+            cout << "Data film dihapus.\n";
+            break;
+
+        case 6:
             inorder(filmBST.root);
             break;
 

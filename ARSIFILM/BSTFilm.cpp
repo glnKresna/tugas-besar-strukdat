@@ -8,14 +8,12 @@ filmData* createNode(
     string judul,
     string genre,
     int tahunTayang,
-    int durasi,
     float rating
 ) {
     filmData* newNode = new filmData;
     newNode->judul = judul;
     newNode->genre = genre;
     newNode->tahunTayang = tahunTayang;
-    newNode->durasi = durasi;
     newNode->rating = rating;
     newNode->left = NULL;
     newNode->right = NULL;
@@ -46,14 +44,20 @@ void insertFilm(BSTFilm &T, filmData* newNode) {
 }
 
 filmData* searchByJudul(filmData* root, string judul) {
-    if (root == NULL || root->judul == judul)
+    if (root == NULL)
+        return NULL;
+
+    string a = toLowerCase(judul);
+    string b = toLowerCase(root->judul);
+
+    if (a == b)
         return root;
 
-    if (judul < root->judul)
-        return searchByJudul(root->left, judul);
-    else
-        return searchByJudul(root->right, judul);
+    return (a < b)
+        ? searchByJudul(root->left, judul)
+        : searchByJudul(root->right, judul);
 }
+
 
 filmData* findMin(filmData* root) {
     while (root->left != NULL)
@@ -85,7 +89,6 @@ filmData* deleteByJudul(filmData* root, string judul) {
         root->judul = temp->judul;
         root->genre = temp->genre;
         root->tahunTayang = temp->tahunTayang;
-        root->durasi = temp->durasi;
         root->rating = temp->rating;
 
         root->right = deleteByJudul(root->right, temp->judul);
@@ -99,7 +102,6 @@ void inorder(filmData* root) {
         cout << "Judul  : " << root->judul << endl;
         cout << "Genre  : " << root->genre << endl;
         cout << "Tahun  : " << root->tahunTayang << endl;
-        cout << "Durasi : " << root->durasi << " menit" << endl;
         cout << "Rating : " << root->rating << endl;
         cout << "-----------------------------\n";
         inorder(root->right);
@@ -128,18 +130,45 @@ int countFilm(filmData* root) {
     return 1 + countFilm(root->left) + countFilm(root->right);
 }
 
-filmData* findHighestRating(filmData* root) {
-    if (root == NULL)
-        return NULL;
+void searchByRating(filmData* root, float minRating) {
+    if (root == NULL) return;
+    searchByRating(root->left, minRating);
 
-    filmData* maxNode = root;
-    filmData* leftMax = findHighestRating(root->left);
-    filmData* rightMax = findHighestRating(root->right);
+    float min = minRating;
+    float max = minRating + 1.0f;
 
-    if (leftMax != NULL && leftMax->rating > maxNode->rating)
-        maxNode = leftMax;
-    if (rightMax != NULL && rightMax->rating > maxNode->rating)
-        maxNode = rightMax;
+    if (root->rating >= min && root->rating < max) {
+        cout << "Judul  : " << root->judul << endl;
+        cout << "Genre  : " << root->genre << endl;
+        cout << "Tahun  : " << root->tahunTayang << endl;
+        cout << "Rating : " << root->rating << endl;
+        cout << "-----------------------------\n";
+    }
 
-    return maxNode;
+    searchByRating(root->right, minRating);
+}
+
+
+void searchByGenre(filmData* root, string genre) {
+    if (root != NULL) {
+        searchByGenre(root->left, genre);
+
+        if (toLowerCase(root->genre) == toLowerCase(genre)) {
+            cout << "Judul  : " << root->judul << endl;
+            cout << "Genre  : " << root->genre << endl;
+            cout << "Tahun  : " << root->tahunTayang << endl;
+            cout << "Rating : " << root->rating << endl;
+            cout << "-----------------------------\n";
+        }
+
+        searchByGenre(root->right, genre);
+    }
+}
+
+string toLowerCase (string s) {
+    for (char &c : s) {
+        c = tolower(c);
+    }
+    
+    return s;
 }
