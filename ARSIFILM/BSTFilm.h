@@ -11,7 +11,6 @@ struct filmData {
     string genre;
     int tahunTayang;
     float rating;
-
     filmData* left;
     filmData* right;
 };
@@ -21,24 +20,16 @@ struct BSTFilm {
 };
 
 void initBST(BSTFilm &T);
-
-filmData* createNode(
-    string judul,
-    string genre,
-    int tahunTayang,
-    float rating
-);
+filmData* createNode(string judul, string genre, int tahun, float rating);
 
 void insertFilm(BSTFilm &T, filmData* newNode);
-string toLowerCase(string s);
 filmData* searchByJudul(filmData* root, string judul);
 filmData* deleteByJudul(filmData* root, string judul);
 
 void inorder(filmData* root);
-void preorder(filmData* root);
-void postorder(filmData* root);
-
-void searchByRating(filmData* root, float rating);
+void searchByRating(filmData* root, float minRating);
 void searchByGenre(filmData* root, string genre);
+
+string toLowerCase(string s);
 
 #endif
