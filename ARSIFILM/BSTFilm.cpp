@@ -74,7 +74,12 @@ filmData* deleteByJudul(filmData* root, string judul) {
         }
 
         filmData* temp = findMin(root->right);
-        *root = *temp;
+
+        root->judul = temp->judul;
+        root->genre = temp->genre;
+        root->tahunTayang = temp->tahunTayang;
+        root->rating = temp->rating;
+
         root->right = deleteByJudul(root->right, temp->judul);
     }
     return root;
