@@ -108,11 +108,34 @@ void searchByRating(filmData* root, float minRating) {
     searchByRating(root->right, minRating);
 }
 
+string trim(const string &s) {
+    int i = 0, j = (int)s.size() - 1;
+    while (i <= j && isspace((unsigned char)s[i])) i++;
+    while (j >= i && isspace((unsigned char)s[j])) j--;
+    return (i > j) ? "" : s.substr(i, j - i + 1);
+}
+
+bool hasGenreManual(const string &genreField, const string &wanted) {
+    string key = toLowerCase(trim(wanted));
+    string token = "";
+
+    for (int i = 0; i <= (int)genreField.size(); i++) {
+        if (i == (int)genreField.size() || genreField[i] == ',') {
+            string g = toLowerCase(trim(token));
+            if (!g.empty() && g == key) return true;
+            token = "";
+        } else {
+            token += genreField[i];
+        }
+    }
+    return false;
+}
+
 void searchByGenre(filmData* root, string genre) {
     if (!root) return;
     searchByGenre(root->left, genre);
 
-    if (toLowerCase(root->genre) == toLowerCase(genre)) {
+    if (hasGenreManual(root->genre, genre)) {
         cout << root->judul << " - " << root->genre << endl;
     }
 
