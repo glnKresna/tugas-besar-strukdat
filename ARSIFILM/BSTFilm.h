@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <cctype>
+#include <sstream>
 using namespace std;
 
 struct filmData {

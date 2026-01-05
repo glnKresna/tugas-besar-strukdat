@@ -117,16 +117,13 @@ string trim(const string &s) {
 
 bool hasGenreManual(const string &genreField, const string &wanted) {
     string key = toLowerCase(trim(wanted));
-    string token = "";
+    string token;
+    stringstream ss(genreField);
 
-    for (int i = 0; i <= (int)genreField.size(); i++) {
-        if (i == (int)genreField.size() || genreField[i] == ',') {
-            string g = toLowerCase(trim(token));
-            if (!g.empty() && g == key) return true;
-            token = "";
-        } else {
-            token += genreField[i];
-        }
+    while (getline(ss, token, ',')) {
+        token = toLowerCase(trim(token));
+        if (!token.empty() && token == key)
+            return true;
     }
     return false;
 }
