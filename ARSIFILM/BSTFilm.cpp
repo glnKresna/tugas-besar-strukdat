@@ -45,7 +45,7 @@ filmData* searchByJudul(filmData* root, string judul) {
 
     if (a == b) return root;
     return (a < b) ? searchByJudul(root->left, judul)
-                   : searchByJudul(root->right, judul);
+    : searchByJudul(root->right, judul);
 }
 
 filmData* findMin(filmData* root) {
@@ -98,13 +98,13 @@ void inorder(filmData* root) {
 }
 
 void searchByRating(filmData* root, float minRating) {
-    if (!root) return;
+    if (root == NULL) return;
     searchByRating(root->left, minRating);
 
     if (root->rating >= minRating && root->rating < minRating + 1) {
         cout << root->judul << " (" << root->rating << ")\n";
     }
-
+    
     searchByRating(root->right, minRating);
 }
 
@@ -132,7 +132,7 @@ bool hasGenreManual(const string &genreField, const string &wanted) {
 }
 
 void searchByGenre(filmData* root, string genre) {
-    if (!root) return;
+    if (root == NULL) return;
     searchByGenre(root->left, genre);
 
     if (hasGenreManual(root->genre, genre)) {
@@ -140,6 +140,14 @@ void searchByGenre(filmData* root, string genre) {
     }
 
     searchByGenre(root->right, genre);
+}
+
+bool adaGenre(filmData* root, string genre) {
+    if (root == NULL) return false;
+
+    if (adaGenre(root->left, genre)) return true;
+    if (hasGenreManual(root->genre, genre)) return true;
+    return adaGenre(root->right, genre);
 }
 
 string toLowerCase(string s) {

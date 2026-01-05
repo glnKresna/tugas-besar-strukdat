@@ -5,7 +5,6 @@ int main() {
     BSTFilm filmBST;
     initBST(filmBST);
 
-    // ===== BATAGOR ENAK NJIR =====
     insertFilm(filmBST, createNode("Joker", "Drama", 2019, 8.8));
     insertFilm(filmBST, createNode("Avengers Endgame", "Action", 2019, 8.0));
     insertFilm(filmBST, createNode("La La Land", "Romance", 2016, 7.9));
@@ -23,7 +22,7 @@ int main() {
         cout << "2. Cari Film (Judul)\n";
         cout << "3. Cari Film (Rating)\n";
         cout << "4. Cari Film (Genre)\n";
-        cout << "5. Edit Film\n";
+        cout << "5. Edit Data Film\n";
         cout << "6. Hapus Film\n";
         cout << "7. Tampilkan Semua Film\n";
         cout << "0. Keluar\n";
@@ -33,9 +32,7 @@ int main() {
 
         if (cin.fail()) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "\nERROR: Input menu harus berupa ANGKA!\n";
-            cout << "Tekan ENTER untuk kembali ke menu...";
             cin.get();
             continue;
         }
@@ -44,13 +41,10 @@ int main() {
 
         if (pilihan < 0 || pilihan > 7) {
             cout << "\nERROR: Menu tidak tersedia!\n";
-            cout << "Tekan ENTER untuk kembali ke menu...";
-            cin.get();
-            continue;
         }
 
         if (pilihan == 0) {
-            cout << "Keluar dari program.\n";
+            cout << "\nKeluar dari program.\n";
             break;
         }
 
@@ -94,8 +88,8 @@ int main() {
             break;
 
         case 2: // Cari Judul
-            if (!filmBST.root) {
-                cout << "Data film masih kosong.\n";
+            if (filmBST.root == NULL) {
+                cout << "\nData film masih kosong.\n";
                 break;
             }
 
@@ -113,13 +107,19 @@ int main() {
             break;
 
         case 3: // Cari Rating
-            if (!filmBST.root) {
-                cout << "Data film masih kosong.\n";
+            if (filmBST.root == NULL) {
+                cout << "\nData film masih kosong.\n";
                 break;
             }
 
             cout << "Masukkan rating: ";
             cin >> rating;
+            cout << "\nFilm dengan rating " << rating << ":\n";
+            
+            if (rating < 0 || rating > 10) {
+                cout << "ERROR: Rating harus 0 - 10!\n";
+                break;
+            }
 
             if (cin.fail()) {
                 cin.clear();
@@ -133,19 +133,24 @@ int main() {
             break;
 
         case 4: // Cari Genre
-            if (!filmBST.root) {
-                cout << "Data film masih kosong.\n";
+            if (filmBST.root == NULL) {
+                cout << "\nData film masih kosong.\n";
                 break;
             }
 
             cout << "Masukkan genre: ";
             getline(cin, genre);
-            searchByGenre(filmBST.root, genre);
+            if (genre.empty()) getline(cin, genre); // handle leftover newline
+            if (!adaGenre(filmBST.root, genre)) {
+                cout << "\nGenre tidak ditemukan dalam data film.\n";
+            } else {
+                searchByGenre(filmBST.root, genre);
+            }
             break;
 
         case 5: // Edit Film
-            if (!filmBST.root) {
-                cout << "Data film masih kosong.\n";
+            if (filmBST.root == NULL) {
+                cout << "\nData film masih kosong.\n";
                 break;
             }
 
@@ -153,6 +158,9 @@ int main() {
             getline(cin, judul);
 
             if (filmData* f = searchByJudul(filmBST.root, judul)) {
+                cout << "Judul baru  : ";
+                getline(cin, f->judul);
+
                 cout << "Genre baru  : ";
                 getline(cin, f->genre);
 
@@ -163,31 +171,31 @@ int main() {
                 cin >> f->rating;
 
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "Data film berhasil diperbarui.\n";
+                cout << "\nData film berhasil diperbarui.\n";
             } else {
-                cout << "Film tidak ditemukan.\n";
+                cout << "\nFilm tidak ditemukan.\n";
             }
             break;
 
         case 6: // Hapus Film
-            if (!filmBST.root) {
-                cout << "Data film masih kosong.\n";
+            if (filmBST.root == NULL) {
+                cout << "\nData film masih kosong.\n";
                 break;
             }
 
             cout << "Judul film yang dihapus: ";
             getline(cin, judul);
 
-            if (!searchByJudul(filmBST.root, judul)) {
-                cout << "Film tidak ditemukan.\n";
+            if (searchByJudul(filmBST.root, judul) == NULL) {
+                cout << "\nFilm tidak ditemukan.\n";
             } else {
                 filmBST.root = deleteByJudul(filmBST.root, judul);
-                cout << "Film berhasil dihapus.\n";
+                cout << "\nFilm berhasil dihapus.\n";
             }
             break;
 
-        case 7: // Tampilkan Semua
-            if (!filmBST.root) {
+        case 7: // Tampilkan Semua Film
+            if (filmBST.root == NULL) {
                 cout << "\nData film masih kosong.\n";
             } else {
                 inorder(filmBST.root);

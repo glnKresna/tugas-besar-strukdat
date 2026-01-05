@@ -30,6 +30,8 @@ void inorder(filmData* root);
 void searchByRating(filmData* root, float minRating);
 void searchByGenre(filmData* root, string genre);
 
+bool adaGenre(filmData* root, string genre);
+
 string toLowerCase(string s);
 
 #endif
