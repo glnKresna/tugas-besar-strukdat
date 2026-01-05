@@ -140,8 +140,8 @@ int main() {
 
             cout << "Masukkan genre: ";
             getline(cin, genre);
-            if (genre.empty()) getline(cin, genre); // handle leftover newline
-            if (!adaGenre(filmBST.root, genre)) {
+            if (genre.empty()) getline(cin, genre);
+            if (adaGenre(filmBST.root, genre) == false) {
                 cout << "\nGenre tidak ditemukan dalam data film.\n";
             } else {
                 searchByGenre(filmBST.root, genre);
